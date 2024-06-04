@@ -1,0 +1,24 @@
+<md-list class="scroll-container">
+  <md-list-item class="md-3-line"
+                ng-repeat="candidateSubmission in candidatesSubmissions track by candidateSubmission._id"
+                ng-click="loadSubmission(candidateSubmission)"
+                ng-class="{ 'nav-active': candidateSubmission === selectedCandidateSubmission.selected }">
+    <div class="md-list-item-text" style="min-width:0" layout="row">
+      <div flex layout="column">
+        <h3>
+          {{candidateSubmission.candidate.candidate.name}}
+        </h3>
+        <h4>{{candidateSubmission.candidate.candidate.jobTitle}}
+          <span ng-if="candidateSubmission.candidate.candidate.employer"> - {{candidateSubmission.candidate.candidate.employer}}</span>
+        </h4>
+        <p>
+          {{candidateSubmission.status}} on {{candidateSubmission.at | date:'medium' }}
+        </p>
+      </div>
+      <md-icon class="md-primary md-hue-2"
+               ng-if="candidateSubmission.status==='Approved'">thumb_up
+      </md-icon>
+    </div>
+
+  </md-list-item>
+</md-list>

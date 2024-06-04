@@ -1,0 +1,8 @@
+<md-dialog aria-label="Candidate review" style="width: 800px;" ng-cloak>
+  <md-dialog-content class="md-padding">
+    <candidate-review on-done-reviewing="updateSubmission(rating, reason, description)"
+                      pending-review="pendingReview"
+                      review="review"
+                      operations="operations"></candidate-review>
+  </md-dialog-content>
+</md-dialog>

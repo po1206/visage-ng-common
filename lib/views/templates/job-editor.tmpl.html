@@ -1,0 +1,262 @@
+<md-content class="md-padding">
+  <form accessible-form name="jobForm"
+        class="job-form"
+        novalidate
+        ng-submit="jobForm.$valid && saveJob()">
+
+    <div layout="column">
+      <h3 class="md-title">
+        Job details
+      </h3>
+      <md-input-container class="md-block" flex-gt-sm id="input-container-title">
+        <label>Job Title *</label>
+        <input auto-focus name="uJobTitle" ng-required="true" ng-disabled="disabled"
+               ng-model="job.title">
+        <div ng-show="jobForm.$submitted || jobForm.uJobTitle.$touched">
+          <div ng-message="required" ng-show="jobForm.uJobTitle.$error.required">This field is
+            mandatory
+          </div>
+        </div>
+      </md-input-container>
+
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block"
+                            flex-gt-sm
+                            md-is-error="jobForm.jobRole.$error.required">
+          <label>Job role *</label>
+          <md-select ng-disabled="pending || disabled" name="jobRole" ng-required="true"
+                     ng-model="job.role">
+            <md-option ng-repeat="jobRole in jobRoles" value="{{jobRole}}">
+              {{jobRole}}
+            </md-option>
+          </md-select>
+          <div ng-show="jobForm.$submitted || jobForm.jobRole.$touched">
+            <div ng-message="required" ng-show="jobForm.jobRole.$error.required">This field is
+              mandatory
+            </div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block"
+                            flex-gt-sm
+                            md-is-error="jobForm.jobRole.$error.required">
+          <label>Industry *</label>
+          <md-select ng-disabled="pending || disabled" name="industry" ng-required="true"
+                     ng-model="job.industry">
+            <md-option ng-repeat="industry in industries" value="{{industry}}">
+              {{industry}}
+            </md-option>
+          </md-select>
+          <div ng-show="jobForm.$submitted || jobForm.industry.$touched">
+            <div ng-message="required" ng-show="jobForm.industry.$error.required">This field is
+              mandatory
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block"
+                            flex-gt-sm
+                            md-is-error="jobForm.jobRole.$error.required">
+          <label>Salary range (monthly) *</label>
+          <md-select name="salaryRange" ng-disabled="pending || disabled" ng-required="true"
+                     ng-model="job.salaryRange">
+            <md-option ng-repeat="salRa in salaryRange" value="{{salRa}}">
+              {{salRa}}
+            </md-option>
+          </md-select>
+          <div ng-show="jobForm.$submitted || jobForm.salaryRange.$touched">
+            <div ng-message="required" ng-show="jobForm.salaryRange.$error.required">This field is
+              mandatory
+            </div>
+          </div>
+        </md-input-container>
+        <md-autocomplete class="md-block" flex-gt-sm md-input-name="jobLocation"
+                         ng-required="true" ng-disabled="pending || disabled"
+                         md-selected-item="job.location"
+                         md-search-text="searchTextLocation"
+                         md-items="jobLocation in querySearch(searchTextLocation)"
+                         md-item-text="jobLocation"
+                         md-floating-label="Job Location *"
+                         md-autocomplete-required>
+          <md-item-template>
+            <span md-highlight-text="searchTextLocation">{{jobLocation}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matching location.
+          </md-not-found>
+          <div ng-show="jobForm.$submitted || jobForm.jobLocation.$touched">
+            <div ng-message="selectedItem" ng-show="jobForm.jobLocation.$error.selectedItem">Invalid
+              location selected
+            </div>
+            <div ng-message="required" ng-show="jobForm.jobLocation.$error.required">This field is
+              mandatory
+            </div>
+          </div>
+        </md-autocomplete>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>City</label>
+          <input name="uJobCity" ng-disabled="pending || disabled" ng-model="job.city">
+        </md-input-container>
+      </div>
+
+
+      <job-description-editor ng-disabled="pending || disabled"
+                              description="job.description"
+                              name="description"
+                              ng-if="!screenIsSmall"
+                              placeholder="Description of the position"
+                              ng-required="true">
+
+      </job-description-editor>
+
+      <md-input-container ng-if="screenIsSmall" class="md-block">
+        <label>Description of the position *</label>
+        <textarea ng-required="true"
+                  ng-disabled="pending || disabled"
+                  ng-model="job.description"
+                  name="description"
+                  columns="1"
+                  rows="5"></textarea>
+      </md-input-container>
+
+      <div ng-show="jobForm.$submitted || jobForm.description.$touched">
+        <div ng-message="required" ng-show="jobForm.description.$error.required">This field is
+          mandatory
+        </div>
+      </div>
+
+      <h3 class="md-title">
+        Candidates requirements
+      </h3>
+      <md-input-container class="md-block">
+        <label>Describe the ideal candidate *</label>
+        <textarea
+          ng-required="true"
+          ng-disabled="pending || disabled"
+          ng-model="job.requirements.candidateDescription"
+          name="candidateDescription"
+          columns="1" rows="5"></textarea>
+        <div ng-show="jobForm.$submitted || jobForm.candidateDescription.$touched">
+          <div ng-message="required" ng-show="jobForm.candidateDescription.$error.required">This
+            field is
+            mandatory
+          </div>
+        </div>
+      </md-input-container>
+
+      <!--<md-chips class="custom-chips"-->
+      <!--ng-model="job.requirements.skills"-->
+      <!--placeholder="Enter a skill"-->
+      <!--delete-button-label="Remove Skill"-->
+      <!--delete-hint="Press delete to remove skill"-->
+      <!--secondary-placeholder="+Skill">-->
+      <!--</md-chips>-->
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Which locations would you like us to source from ? *</label>
+        <input ng-disabled="pending || disabled" ng-required="true" name="resLocation" ng-model="job.requirements.resLocation">
+        <div ng-show="jobForm.$submitted || jobForm.resLocation.$touched">
+          <div ng-message="required" ng-show="jobForm.resLocation.$error.required">This field is
+            mandatory
+          </div>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>What job titles should candidates have from their work history ?</label>
+        <input ng-disabled="pending || disabled" name="jobTitle" ng-model="job.requirements.jobTitle">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>How many years of work experience should candidates have ?</label>
+        <input ng-disabled="pending || disabled" name="yearsExp" ng-model="job.requirements.yearsExp">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Which companies would you like the candidate to have worked for or be working for?</label>
+        <input ng-disabled="pending || disabled" name="employer" ng-model="job.requirements.employer">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>What level of education should candidates have ?</label>
+        <input ng-disabled="pending || disabled" name="degree" ng-model="job.requirements.degree">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Should candidates have any post-graduate certifications ?</label>
+        <input ng-disabled="pending || disabled" name="degree" ng-model="job.requirements.certifications">
+
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <label>Anything else we need to know ?</label>
+        <textarea
+          ng-disabled="pending || disabled"
+          ng-model="job.requirements.miscellaneous"
+          name="miscellaneous"
+          columns="1" rows="5"></textarea>
+      </md-input-container>
+
+      <br>
+      * Required fields
+    </div>
+
+    <md-input-container ng-if="terms">
+      <md-checkbox name="tandc"
+                   ng-disabled="pending || disabled"
+                   ng-model="job.tandc"
+                   ng-required="true"
+                   aria-label="T & C"
+                   class="md-primary md-hue-2">
+        <div class="md-body-1 tac">I have read and I agree to
+          <a href="https://visage.jobs/terms-conditions.html"
+             target="_blank">
+            the terms and conditions</a>
+        </div>
+      </md-checkbox>
+      <div ng-messages="jobForm.tandc.$error"
+           ng-show="jobForm.tandc.$error.required">
+        <div ng-message="required">You must accept the terms and conditions.</div>
+      </div>
+    </md-input-container>
+
+
+    <div layout="row" layout-align="start start">
+      <md-progress-circular ng-show="pending" md-mode="indeterminate"></md-progress-circular>
+      <md-button ng-disabled="pending || disabled"
+                 ng-show="existingJob"
+                 ng-click="removeJob(job)"
+                 class="md-raised md-warn md"
+                 flex-xs="100">Remove
+      </md-button>
+
+      <span flex></span>
+
+      <md-button ng-disabled="pending || disabled"
+                 ng-show="!existingJob"
+                 ng-click="back()"
+                 class="md-raised md"
+                 flex-xs="100">
+        Cancel
+      </md-button>
+
+      <md-button ng-disabled="pending || disabled" ng-show="!existingJob" type="submit"
+                 class="md-raised md-primary md"
+                 flex-xs="100">Add
+      </md-button>
+
+      <md-button ng-disabled="pending || disabled" ng-show=" existingJob" type="submit"
+                 class="md-raised md-primary md"
+                 flex-xs="100">Save Updates
+      </md-button>
+
+      <md-button ng-disabled="pending || disabled" ng-show="existingJob && job.status ==='Draft'" ng-click="approveJob()"
+                 class="md-raised md-primary md-accent"
+                 flex-xs="100">
+        <md-icon>check</md-icon>Approve Job
+      </md-button>
+
+    </div>
+  </form>
+</md-content>

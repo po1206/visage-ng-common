@@ -1,0 +1,10 @@
+<div class="pipeline-item"
+     flex
+     layout="column"
+     layout-align="center center"
+     ng-click="viewCandidates()"
+     ng-class="{ 'disabled' : disabled}">
+  <span class="md-display-3">{{count}}</span>
+  <span class="md-body-1">{{label}}</span>
+  <md-button ng-disabled="disabled" ng-if="downloadable" class="md-primary" ng-click="downloadCSV($event)">Download</md-button>
+</div>

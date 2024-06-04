@@ -1,0 +1,44 @@
+<md-dialog aria-label="Message candidate" style="width: 800px;" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Message {{candidateSub.candidate.name}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="column">
+          <div layout="row" layout-align="start start">
+            <h2 class="md-headline">Send a message to {{candidateSub.candidate.name}}</h2>
+            <span flex></span>
+            <div
+              style="width: 100px;height: 100px; background: url('{{getURLProfilePic()}}') no-repeat center center; background-size:contain">
+            </div>
+          </div>
+          <md-input-container>
+            <label for="clientEmail">Your email</label>
+            <input ng-model="originEmail" id="clientEmail" type="text">
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Message to {{candidateSub.candidate.name}}</label>
+            <textarea ng-model="messageContent" rows="5" md-select-on-focus></textarea>
+          </md-input-container>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex><md-progress-circular ng-show="pendingSend"
+                                       md-mode="indeterminate"></md-progress-circular></span>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button class="md-primary" ng-click="sendMessage()" style="margin-right:20px;">
+        Send
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

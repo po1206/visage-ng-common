@@ -1,0 +1,98 @@
+<md-content>
+  <form name="candidateReviewForm" ng-submit="candidateReviewForm.$valid && doneReviewing({rating: review.rating, reason: review.reason, description: review.description})">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab ng-if="!operations || operations.disqualify" md-active="review.rating==='DISQUALIFIED'" md-on-select="changeRating('DISQUALIFIED')">
+        <md-tab-label>
+          <md-icon class="disqualified">thumb_down</md-icon>
+          <span class="disqualified">No</span>
+        </md-tab-label>
+        <md-tab-body>
+          <md-content class="md-padding">
+            <md-radio-group name="reasonDisqualify"
+                            ng-if="review.rating==='DISQUALIFIED'"
+                            ng-required="true"
+                            ng-model="review.reason"
+                            class="md-primary">
+              <div ng-repeat="(disQualifyReasonValue, disQualifyReasonLabel) in reasons.DISQUALIFY">
+                <md-radio-button ng-value="disQualifyReasonValue">
+                  {{ disQualifyReasonLabel }}
+                </md-radio-button>
+                <div ng-if="disQualifyReasonDescriptionShouldBeShown(disQualifyReasonValue)">
+                  <md-input-container class="reason-description">
+                    <label>Description</label>
+                    <input type="text" name="reasonDescription"
+                           ng-model="review.description"
+                           placeholder="{{getReasonDescriptionPlaceHolder()}}"
+                           required md-maxlength="250">
+                  </md-input-container>
+                  <div ng-show="candidateReviewForm.$submitted">
+                    <div class="field-error" ng-message="required"
+                         ng-show="candidateReviewForm.reasonDescription.$error.required">
+                      This field is mandatory
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </md-radio-group>
+            <div ng-show="candidateReviewForm.$submitted">
+              <div class="field-error" ng-message="required"
+                   ng-show="candidateReviewForm.reasonDisqualify.$error.required">
+                This field is mandatory
+              </div>
+            </div>
+          </md-content>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-if="!operations || operations.qualify" md-active="review.rating==='QUALIFIED'" md-on-select="changeRating('QUALIFIED')">
+        <md-tab-label>
+          <md-icon class="qualified">thumb_up</md-icon>
+          <span class="qualified">Yes</span>
+        </md-tab-label>
+        <md-tab-body>
+          <md-content class="md-padding">
+          </md-content>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-if="!operations || operations.outstanding" md-active="review.rating==='OUTSTANDING'" md-on-select="changeRating('OUTSTANDING')">
+        <md-tab-label>
+          <md-icon class="outstanding">whatshot</md-icon>
+          <span class="outstanding">Definitely</span>
+        </md-tab-label>
+        <md-tab-body>
+          <md-content class="md-padding">
+          </md-content>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-if="operations.shortlist" md-active="review.rating==='SHORTLISTED'" md-on-select="changeRating('SHORTLISTED')">
+        <md-tab-label>
+          <md-icon class="outstanding">people</md-icon>
+          <span class="outstanding">Shortlist</span>
+        </md-tab-label>
+        <md-tab-body>
+          <md-content class="md-padding">
+          </md-content>
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+    <div layout="row">
+      <span class="md-body-2"><md-icon>warning</md-icon>You won't be able to change your evaluation once submitted</span>
+      <span flex></span>
+      <md-progress-circular class="md-padding center-block"
+                            ng-show="pendingReview"
+                            md-mode="indeterminate"></md-progress-circular>
+      <!--<md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>-->
+      <!--<md-icon>help</md-icon>-->
+      <!--<span style="margin-left: 10px;">Job requirements</span>-->
+      <!--</md-button>-->
+      <md-button ng-disabled="pendingReview" ng-click="close()">
+        Close
+      </md-button>
+      <md-button ng-disabled="pendingReview"
+                 class="md-primary"
+                 type="submit"
+                 style="margin-right:20px;">
+        Submit
+      </md-button>
+    </div>
+  </form>
+</md-content>

@@ -1,0 +1,74 @@
+<md-content class="md-padding">
+  <div layout="column" layout-gt-md="row" layout-align="start start">
+    <div class="candidate-social-photo-container" ng-if="candidateSubmission.candidate.candidate.socialPhotoUrl" layout="column">
+      <img ng-src="{{candidateSubmission.candidate.candidate.socialPhotoUrl}}" height="232" width="auto">
+    </div>
+    <div flex layout="column">
+      <h2 class="md-headline">
+        {{candidateSubmission.candidate.candidate.name}}
+        <span ng-repeat="socialProfile in candidateSubmission.candidate.candidate.socialProfiles">
+          <span ng-switch="socialProfile.type">
+            <span ng-switch-when="facebook" class="social-icon">
+              <a ng-href="{{socialProfile.url}}" target="_blank">
+                <md-icon md-svg-src="/images/icons/ic_facebook_box.svg" aria-label="{{socialProfile.typeName}}"></md-icon>
+              </a>
+            </span>
+            <span ng-switch-when="twitter" class="social-icon">
+              <a ng-href="{{socialProfile.url}}" target="_blank">
+                <md-icon md-svg-src="/images/icons/ic_twitter_box.svg" aria-label="{{socialProfile.typeName}}"></md-icon>
+              </a>
+            </span>
+            <span ng-switch-when="linkedin" class="social-icon">
+              <a ng-href="{{socialProfile.url}}" target="_blank">
+                <md-icon md-svg-src="/images/icons/ic_linkedin_box.svg" aria-label="{{socialProfile.typeName}}"></md-icon>
+              </a>
+            </span>
+            <span ng-switch-when="google" class="social-icon">
+              <a ng-href="{{socialProfile.url}}" target="_blank">
+                <md-icon md-svg-src="/images/icons/ic_google_box.svg" aria-label="{{socialProfile.typeName}}"></md-icon>
+              </a>
+            </span>
+            <span ng-switch-when="github" class="social-icon">
+              <a ng-href="{{socialProfile.url}}" target="_blank">
+                <md-icon md-svg-src="/images/icons/ic_github_box.svg" aria-label="{{socialProfile.typeName}}"></md-icon>
+              </a>
+            </span>
+          </span>
+        </span>
+      </h2>
+      <h3 class="md-subhead">{{candidateSubmission.candidate.candidate.jobTitle}}
+        <span ng-if="candidateSubmission.candidate.candidate.employer"> - {{candidateSubmission.candidate.candidate.employer}}</span>
+      </h3>
+      <div layout="column" layout-gt-md="row">
+        <div flex class="job-feature" layout="column" layout-align="center center">
+          <md-tooltip md-direction="bottom">
+            Nationality
+          </md-tooltip>
+          <md-icon md-svg-src="/images/icons/ic_nationality.svg" aria-label="android "></md-icon>
+          <span class="md-body-1">{{candidateSubmission.candidate.candidate.nationality}}</span>
+        </div>
+        <div flex class="job-feature" layout="column" layout-align="center center">
+          <md-tooltip md-direction="bottom">
+            Residence
+          </md-tooltip>
+          <md-icon>location_on</md-icon>
+          <span class="md-body-1"><span ng-if="candidateSubmission.candidate.candidate.city">{{candidateSubmission.candidate.candidate.city}} - </span>{{candidateSubmission.candidate.candidate.location}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div layout="row">
+    <h3 class="md-head">Candidate CV</h3>
+    <span flex></span>
+    <a ng-href="{{urlPreviewCV}}" target="_blank">
+      <span class="top-margin" aria-label="Download CV">
+        <md-tooltip md-direction="bottom">
+          Download CV
+        </md-tooltip>
+        <md-icon>file_download</md-icon>
+      </span>
+    </a>
+  </div>
+  <preview-cv ng-if="urlPreviewCV" cv-url="urlPreviewCV"></preview-cv>
+</md-content>

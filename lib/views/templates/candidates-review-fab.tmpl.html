@@ -1,0 +1,63 @@
+<md-fab-speed-dial md-open="isOpen" md-direction="left"
+                   class="md-scale"
+                   id="rate-candidate-button">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-accent">
+      <md-tooltip md-direction="bottom">
+        Rate candidate
+      </md-tooltip>
+      <md-icon>thumbs_up_down</md-icon>
+    </md-button>
+  </md-fab-trigger>
+  <md-fab-actions>
+    <md-button aria-label="Requirements"
+               class="md-fab md-raised md-mini"
+               ng-if="!operations || operations.viewRequirements"
+               ng-click="viewRequirements($event)">
+      <md-tooltip md-direction="bottom">
+        View requirements
+      </md-tooltip>
+      <md-icon>info_outline</md-icon>
+    </md-button>
+
+    <md-button aria-label="Outstanding"
+               class="md-fab md-accent md-mini"
+               ng-if="!operations || operations.outstanding"
+               ng-click="outstanding()">
+      <md-tooltip md-direction="bottom">
+        Definitely
+      </md-tooltip>
+      <md-icon class="">whatshot</md-icon>
+    </md-button>
+
+    <md-button aria-label="Qualify"
+               class="md-fab md-primary md-mini"
+               ng-if="!operations || operations.qualify"
+               ng-click="qualify($event)">
+      <md-tooltip md-direction="bottom">
+        Yes
+      </md-tooltip>
+      <md-icon class="">thumb_up</md-icon>
+    </md-button>
+
+    <md-button aria-label="Disqualify"
+               class="md-fab md-warn md-mini"
+               ng-if="!operations || operations.disqualify"
+               ng-click="disqualify()">
+      <md-tooltip md-direction="bottom">
+        No
+      </md-tooltip>
+      <md-icon class="">thumb_down</md-icon>
+    </md-button>
+
+    <md-button aria-label="Shortlist"
+               class="md-fab md-accent md-mini"
+               ng-if="operations.shortlist"
+               ng-click="shortlist()">
+      <md-tooltip md-direction="bottom">
+        Shortlist
+      </md-tooltip>
+      <md-icon class="">people</md-icon>
+    </md-button>
+  </md-fab-actions>
+</md-fab-speed-dial>

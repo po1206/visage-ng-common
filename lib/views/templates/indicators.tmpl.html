@@ -1,0 +1,30 @@
+<div layout="row" layout-align="center center" id="recruiter-kpis" class="md-padding">
+  <div flex layout="column" layout-align="center start">
+    <h2 class="cv-pending">
+      <md-icon class="md-accent">hourglass_empty</md-icon>
+      {{indicators.pendingCVs}}
+    </h2>
+  </div>
+
+  <div flex layout="column" layout-align="center end" ng-if="!indicators.slotsLeft && !indicators.slots">
+    <h2 class="cv-approved">
+      <md-icon class="md-primary">thumb_up</md-icon>
+      {{indicators.approvedCVs}}
+    </h2>
+  </div>
+
+  <div flex layout="column" layout-align="center center" ng-if="indicators.slotsLeft || indicators.slots">
+    <h2 class="cv-approved">
+      <md-icon class="md-primary">thumb_up</md-icon>
+      {{indicators.approvedCVs}}
+    </h2>
+  </div>
+
+  <div flex layout="column" layout-align="center end" ng-if="indicators.slotsLeft || indicators.slots">
+    <h2 class="cv-slots">
+      <md-icon class="md-primary md-hue-3">person_add</md-icon>
+      {{indicators.slotsLeft || indicators.slots}}
+    </h2>
+  </div>
+</div>
+

@@ -1,0 +1,187 @@
+<md-dialog aria-label="Refer candidate" style="width: 800px;" ng-cloak>
+  <form name="submissionForm" ng-submit="submissionForm.$valid && doneSubmitting()">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add to shortlist</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="column">
+          <div layout="row" layout-align="start start">
+            <h2 class="md-headline">Add a candidate to the shortlist</h2>
+            <span flex></span>
+            <div ng-if="pendingProfilePictureUpload || candidateSubmission.candidate.candidate.picture"
+                 style="width: 100px;height: 100px; background: url('{{getURLProfilePic()}}') no-repeat center center; background-size:contain">
+              <md-progress-circular ng-show="pendingProfilePictureUpload"
+                                    md-mode="indeterminate"></md-progress-circular>
+            </div>
+          </div>
+          <div layout="row">
+            <md-button flex
+                       class="md-raised md-primary"
+                       type="file"
+                       ngf-select="uploadProfilePicture($file, $invalidFiles)"
+                       accept="image/*"
+                       ngf-max-height="800"
+                       ngf-max-width="800"
+                       ngf-max-size="1MB">
+              Upload profile picture
+            </md-button>
+          </div>
+          <div layout="row">
+            <span class="md-caption">Max size: 1MB 600x600px</span>
+            <span flex></span>
+            <span class="md-caption">Format: JPG, PNG, GIF</span>
+          </div>
+          <div layout="row">
+            <md-input-container flex-gt-sm>
+              <label for="name">Name</label>
+              <input ng-model="candidateSubmission.candidate.candidate.name" id="name" type="text">
+            </md-input-container>
+            <md-autocomplete flex-gt-sm class="md-block" md-input-name="nationality"
+                             ng-required="true"
+                             md-selected-item="candidateSubmission.candidate.candidate.nationality"
+                             md-search-text="searchTextNationality"
+                             md-items="nationality in querySearch(searchTextNationality)"
+                             md-item-text="nationality"
+                             md-floating-label="Nationality">
+              <md-item-template>
+                <span md-highlight-text="searchTextLocation">{{nationality}}</span>
+              </md-item-template>
+              <md-not-found>
+                No matching location.
+              </md-not-found>
+              <div ng-show="submissionForm.$submitted || submissionForm.nationality.$touched">
+                <div ng-message="selectedItem"
+                     ng-show="submissionForm.nationality.$error.selectedItem">Invalid
+                  nationality selected
+                </div>
+                <div ng-message="required" ng-show="submissionForm.nationality.$error.required">
+                  This
+                  field is
+                  mandatory
+                </div>
+              </div>
+            </md-autocomplete>
+          </div>
+
+
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label for="jobTitle">Current job title</label>
+              <input ng-model="candidateSubmission.candidate.candidate.jobTitle" id="jobTitle" type="text">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Industry</label>
+              <md-select name="industry"
+                         ng-model="candidateSubmission.candidate.candidate.industry">
+                <md-option ng-repeat="industry in industries" value="{{industry}}">
+                  {{industry}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <div layout="row">
+            <md-autocomplete class="md-block" flex-gt-sm md-input-name="location"
+                             ng-required="true"
+                             md-selected-item="candidateSubmission.candidate.candidate.location"
+                             md-search-text="searchTextLocation"
+                             md-items="location in querySearch(searchTextLocation)"
+                             md-item-text="location"
+                             md-floating-label="Location">
+              <md-item-template>
+                <span md-highlight-text="searchTextLocation">{{location}}</span>
+              </md-item-template>
+              <md-not-found>
+                No matching location.
+              </md-not-found>
+              <div ng-show="submissionForm.$submitted || submissionForm.location.$touched">
+                <div ng-message="selectedItem"
+                     ng-show="submissionForm.location.$error.selectedItem">Invalid
+                  location selected
+                </div>
+                <div ng-message="required" ng-show="submissionForm.location.$error.required">This
+                  field is
+                  mandatory
+                </div>
+              </div>
+            </md-autocomplete>
+
+            <md-input-container>
+              <label for="city">City</label>
+              <input ng-model="candidateSubmission.candidate.candidate.city" id="city" type="text">
+            </md-input-container>
+          </div>
+
+          <div layout="row">
+            <md-input-container flex-gt-sm>
+              <label for="email">Email</label>
+              <input ng-model="candidateSubmission.candidate.candidate.email" id="email" type="text">
+            </md-input-container>
+            <md-input-container flex-gt-sm>
+              <label for="video">Video CV</label>
+              <input ng-model="candidateSubmission.candidate.candidate.video" id="video" type="text">
+            </md-input-container>
+          </div>
+          <md-input-container class="md-block">
+            <label>Cover letter</label>
+            <textarea ng-model="candidateSubmission.candidate.candidate.coverLetter"
+                      rows="5"
+                      md-select-on-focus></textarea>
+          </md-input-container>
+
+          <div ngf-drop ngf-select ng-model="file" class="upload-zone" layout-fill=""
+               ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
+               accept=".pdf"
+               ngf-pattern="'.pdf'"
+               ngf-max-files="1"
+               ngf-max-size="10MB"
+          >
+            <div layout="column" layout-align-gt-sm="center center">
+              <p class="md-body-1">Drop the CV here</p>
+              <p class="md-body-1">OR</p>
+              <md-button class="md-raised md-primary">upload CV</md-button>
+            </div>
+          </div>
+          <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+          <md-progress-linear ng-show="file.progress!==undefined" md-mode="determinate"
+                              value="{{file.progress}}"></md-progress-linear>
+          <div class="uploaded" ng-show="candidateSubmission.candidate.candidate.cv" layout="row">
+            <p class="md-body-1">
+              <span>Uploaded : </span>
+              <a href="" ng-click="download(candidateSubmission.candidate.candidate.cv, 'CV')"><span>{{candidateSubmission.candidate.candidate.cv.originalFilename}}</span></a>
+            </p>
+            <span flex></span>
+            <md-progress-circular ng-show="pendingDeletion"
+                                  md-mode="indeterminate"></md-progress-circular>
+            <md-button class="md-warn"
+                       ng-click="removeFileDesc(candidateSubmission.candidate.candidate.cv, 'CV')">Remove
+            </md-button>
+          </div>
+          <div layout="row">
+            <span class="md-caption">Max size: 10MB</span>
+            <span flex></span>
+            <span class="md-caption">Format: PDF</span>
+          </div>
+
+        </div>
+
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex><md-progress-circular  ng-show="pendingSubmission" md-mode="indeterminate"></md-progress-circular></span>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button class="md-primary" type="submit" style="margin-right:20px;">
+        Add
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

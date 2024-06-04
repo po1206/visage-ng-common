@@ -1,0 +1,11 @@
+<div layout="column">
+  <div ng-show="pendingCV" layout="column" layout-align="center center">
+    <p class="md-body-2">Loading pdf viewer...</p>
+    <md-progress-circular ng-show="pendingCV" md-mode="indeterminate"></md-progress-circular>
+  </div>
+  <iframe ng-show="!pendingCV"
+          ng-src="{{pdfViewerEndpoint}}"
+          frameborder="0"></iframe>
+</div>
+<script src="../lib/iframeResizer.contentWindow.min.js"></script>
+

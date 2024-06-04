@@ -1,0 +1,186 @@
+// endbower
+
+.visage {
+
+  .upload-zone {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+    height:100%;
+  }
+
+  .announcement {
+    margin-bottom: 20px;
+
+    .announcement-image {
+      md-icon {
+        font-size: 50px;
+      }
+    }
+
+    .announcement-details {
+      margin-left: 20px;
+    }
+  }
+
+  .notice {
+    background-color:  rgba(0,0,0,0.1);
+    padding:5px;
+
+    .notice-details {
+      font-size: 12px;
+    }
+  }
+
+  // Recruiter interface
+
+  md-list-item.md-3-line .md-list-item-text .kpi {
+    margin: 0 10px;
+  }
+
+  .vertical-divider-mid {
+    height: 70px;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.117647);
+  }
+
+  .kpi-value {
+    font-size: 36px;
+  }
+
+  .secondary-action-row {
+    padding-right: 70px;
+  }
+
+  .upload-zone.dragover {
+    border: 2px dashed white;
+    color: white;
+  }
+
+  #recruiter-kpis {
+    div {
+      h2, .material-icons {
+        font-size: 30px;
+      }
+      h2 {
+        margin: 0 0 0 10px;
+      }
+      .material-icons {
+        margin: -5px 5px 0 0;
+      }
+      span {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .job-feature {
+    height: 100px;
+    padding: 20px;
+
+    .big, .material-icons {
+      font-size: 30px;
+    }
+    span {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  //End recruiter interface
+
+  //TODO Adapt interface for mobile devices (I know it should have been mobile first...)
+  candidate-list-and-details {
+    .list-filter {
+      width: 100%;
+    }
+    .top-margin {
+      margin-top: 10px;
+      display: block;
+    }
+
+    candidate-profile {
+      .candidate-social-photo-container {
+        margin-right: 16px;
+      }
+      .social-icon {
+        display: inline-block;
+      }
+    }
+  }
+
+  candidate-review {
+    .reason-description {
+      width: 100%;
+    }
+  }
+
+  candidates-review-fab {
+
+  }
+
+  pipeline-item {
+    div {
+      cursor: pointer;
+    }
+    div:focus {
+      outline: none;
+    }
+    div.disabled {
+      color: rgba(0, 0, 0, 0.26) !important;
+      cursor: default;
+    }
+  }
+
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: 959px) {
+
+    candidate-list-and-details {
+      .list-wrapper {
+        width: 380px;
+
+        .list-filter {
+          width: 380px;
+          position: fixed;
+          top: 115px;
+          left: 100px;
+          bottom: 20px;
+
+          .list-candidates-header {
+            height: 50px;
+          }
+
+          .scroll-container {
+            height: 100%;
+            overflow-y: scroll;
+          }
+
+          .tabs-candidate {
+            height :100%;
+          }
+        }
+
+      }
+
+      .details-filter {
+        margin-left: 20px;
+      }
+    }
+
+    candidates-review-fab {
+      #rate-candidate-button {
+        position: fixed;
+        right: 30px;
+      }
+    }
+
+    candidates-add-fab {
+      #refer-candidate-button {
+        position: fixed;
+        right: 30px;
+      }
+    }
+
+  }
+
+}

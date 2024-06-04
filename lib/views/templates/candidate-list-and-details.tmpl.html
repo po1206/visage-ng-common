@@ -1,0 +1,101 @@
+<div layout="column">
+  <div layout="row">
+    <div class="list-wrapper">
+      <div class="list-filter md-whiteframe-z2">
+        <md-content style="height:100%">
+          <md-tabs ng-if="job" md-selected="selectedTab" md-border-bottom class="tabs-candidate">
+            <md-tab ng-repeat="status in orderStatuses"
+                    ng-if="candidateSubmissions[status].length > 0"
+                    md-on-select="selectedStatus=status">
+              <md-tab-label>
+                <span ng-if="status === 'Sourced'">
+                  <md-icon class="pending">hourglass_empty</md-icon>
+                  <span class="pending">({{candidateSubmissionsCount[status]}})</span>
+                </span>
+                <span ng-if="status === 'Approved'">
+                  <md-icon class="qualified">thumb_up</md-icon>
+                  <span class="qualified">({{candidateSubmissionsCount[status]}})</span>
+                </span>
+                <span ng-if="status === 'Disqualified'">
+                  <md-icon class="disqualified">thumb_down</md-icon>
+                  <span class="disqualified">({{candidateSubmissionsCount[status]}})</span>
+                </span>
+                <span ng-if="status === 'Shortlisted'">
+                  <md-icon class="qualified">people</md-icon>
+                  <span class="qualified">({{candidateSubmissionsCount[status]}})</span>
+                </span>
+              </md-tab-label>
+              <md-tab-body>
+                <notice ng-if="candidateSubmissionsCount[status] > candidatesReviewLimit">
+                  Only displaying the first {{candidatesReviewLimit}} profiles
+                </notice>
+                <candidates-list candidates-submissions="candidateSubmissions[status]"
+                                 selected-candidate-submission="selectedCandidateSubmission"></candidates-list>
+              </md-tab-body>
+            </md-tab>
+          </md-tabs>
+        </md-content>
+      </div>
+    </div>
+
+    <div flex class="details-filter" layout="column">
+      <div layout="column" ng-if="job">
+        <div layout="row" layout-align="end center">
+          <h2 class="md-display-1" ng-if="job">{{job.title}}</h2>
+          <span flex></span>
+          <md-menu md-position-mode="target-right target" ng-if="detailsClick || downloadUrl">
+            <md-button aria-label="Details"
+                       class="md-icon-button"
+                       ng-click="openMenu($mdOpenMenu, $event)">
+              <md-icon md-menu-origin>more_vert</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item ng-if="detailsClick">
+                <md-button ng-click="detailsClick()">
+                  <md-icon md-menu-align-target>description</md-icon>
+                  Job details
+                </md-button>
+              </md-menu-item>
+              <md-menu-item ng-if="downloadUrl">
+                <a class="md-button" ng-href="{{downloadUrl}}" target="_blank">
+                  <md-icon md-menu-align-target>file_download</md-icon>
+                  <span> CSV Download </span>
+                  <div class="md-ripple-container"></div>
+                </a>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+
+        </div>
+        <indicators ng-if="!job.pre1dot8 && indicators" indicators="indicators"></indicators>
+        <br>
+        <announcement ng-if="reviewMessage">
+          {{reviewMessage}}<span ng-if="reviewDescription">: {{reviewDescription}}</span>
+        </announcement>
+      </div>
+      <div ng-if="selectedCandidateSubmission.selected">
+        <announcement ng-if="['Approved', 'Shortlisted'].indexOf(selectedCandidateSubmission.selected.status)!==-1">
+          <span ng-if="selectedCandidateSubmission.selected.status === 'Approved'"> This candidate was selected as suitable but we don't have his commitment yet.
+            <br>
+            <span class="md-body-2">If you prefer, you can reach out to him/her at {{selectedCandidateSubmission.selected.candidate.candidate.email}}</span>
+          </span>
+          <span ng-if="selectedCandidateSubmission.selected.status === 'Shortlisted'"> This candidate was selected as suitable and is interested in your job opening.
+            <br>
+            <span class="md-body-2">You can reach out to him/her at {{selectedCandidateSubmission.selected.candidate.candidate.email}}</span>
+          </span>
+        </announcement>
+        <div class="md-whiteframe-z1">
+          <md-toolbar class="md-primary list-candidates-header">
+            <div class="md-toolbar-tools">
+              <h2 class="md-flex">Profile</h2>
+            </div>
+          </md-toolbar>
+          <candidate-profile flex candidate-submission="selectedCandidateSubmission.selected">
+
+          </candidate-profile>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

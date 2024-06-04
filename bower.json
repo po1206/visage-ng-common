@@ -1,0 +1,24 @@
+{
+  "name": "visage-ng-common",
+  "version": "1.4.0",
+  "main" : [
+    "dist/visage-ng-common.css",
+    "dist/visage-ng-common.js"
+  ],
+  "dependencies": {
+    "angular": "^1.4.0",
+    "angular-animate": "^1.4.0",
+    "angular-resource": "^1.4.0",
+    "angular-material": "~1.0.9",
+    "ng-file-upload-shim": "^12.0.4",
+    "ng-file-upload": "^12.0.4",
+    "ngWig": "ng-wig#^3.0.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "moduleName": "visageNgCommon",
+  "resolutions": {
+    "angular": "^1.5.5"
+  }
+}
